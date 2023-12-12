@@ -2,10 +2,10 @@ const express = require('express')
 
 const app = express()
 
-app.get('/', async (req, res) => {
+app.get('/true', async (req, res) => {
     //const result = await fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-    const data = await result.json();
-    res.json(data);
+    //const data = await result.json();
+    res.status(200).json({'working' : 'true'});
 })
 
 
