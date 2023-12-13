@@ -3,25 +3,21 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-app.get('/true', async (req, res) => {
-    //const result = await fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-    //const data = await result.json();
-    res.status(200).json({'working' : 'true'});
-})
-
 app.get('/random', async (req, res) => {
-    const resAll = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=507');
-    const dataAll = await resAll.json();
-    const randInt = Math.floor(Math.random() * 507)
-    const randPkmn = dataAll.results[randInt];
-    const resTarg = await fetch(`https://pokeapi.co/api/v2/pokemon/${randPkmn.name}`)
-    const dataTarg = await resTarg.json();
-    // const resSpec = await fetch(dataTarg.species.url)
-    // const dataSpec = await resSpec.json();
-    // const resChain = await fetch(dataSpec.evolution_chain.url);
-    // const dataChain = await resChain.json();
-    // console.log(dataChain)
-    res.status(200).json(dataTarg);
+    let chainURL;
+    while (!chainURL){
+        const randInt = Math.floor(Math.random() * 478)
+        const resTarg = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${randInt}`)
+        const dataTarg = await resTarg.json();
+        chainURL = dataTarg.egg_groups.every(group => group.name != 'no-eggs') && dataTarg.evolution_chain.url;
+    }
+    const resChain = await fetch(chainURL);
+    const dataChain = await resChain.json();
+    const resFinal = await fetch(`https://pokeapi.co/api/v2/pokemon/${dataChain.chain.species.name}`)
+    const dataFinal = await resFinal.json();
+    
+
+    res.status(200).json(dataFinal);
 })
 
 mongoose.connect(process.env.MONGO_URI)
