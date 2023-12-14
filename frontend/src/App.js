@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Box from './pages/Box'
+import Hatch from './pages/Hatch'
 import './App.css'
 import Navbar from './components/Navbar'
 
@@ -18,6 +19,10 @@ function App() {
             <Route
               path='/box'
               element={<Box />}
+            />
+            <Route
+              path='/hatch'
+              element={<Hatch />}
             />
           </Routes>
         </div>
