@@ -3,6 +3,7 @@ const Pokemon = require('../models/pkmnModel')
 
 const router = express.Router()
 
+// get random pokemon from API
 router.get('/random', async (req, res) => {
     let chainURL;
     while (!chainURL){
@@ -20,15 +21,22 @@ router.get('/random', async (req, res) => {
     res.status(200).json(dataFinal);
 })
 
+// add pokemon to database
 router.post('/box/add', async (req, res) => {
-    const {name, box_id} = req.body
+    const {name, box_id, pkmn_id} = req.body
     try {
-        const pokemon = await Pokemon.create({name, box_id})
+        const pokemon = await Pokemon.create({name, box_id, pkmn_id})
         res.status(200).json(pokemon)
     }
     catch(error) {
         res.status(400).json({error: error.message})
     }
+})
+
+// get pokemon from specified box id
+router.get('/box/:id', async (req, res) => {
+    const boxPkmn = await Pokemon.find({box_id: req.params.id})
+    res.status(200).json(boxPkmn)
 })
 
 module.exports = router

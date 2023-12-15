@@ -24,7 +24,8 @@ export default function Hatch() {
                 },
                 body: JSON.stringify({
                     name: pkmn.name,
-                    box_id: 1
+                    box_id: 1,
+                    pkmn_id: pkmn.id
                 })
             })
         }

@@ -9,7 +9,11 @@ const pkmnSchema = new Schema({
     box_id: {
         type: Number,
         required: true
-    }
+    },
+    pkmn_id: {
+        type: Number,
+        required: true
+    },
 }, {timestamps: true})
 
 
