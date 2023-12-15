@@ -20,7 +20,7 @@ router.get('/random', async (req, res) => {
     res.status(200).json(dataFinal);
 })
 
-router.post('/box', async (req, res) => {
+router.post('/box/add', async (req, res) => {
     const {name, box_id} = req.body
     try {
         const pokemon = await Pokemon.create({name, box_id})
